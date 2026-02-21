@@ -34,7 +34,7 @@ model, le_g, le_t, arts = load_all()
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv(p("survey_lung_cancer.csv"))
+    df = pd.read_csv(p("survey lung cancer.csv"))
     df.columns = df.columns.str.strip()
     return df
 
