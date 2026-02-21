@@ -5,8 +5,20 @@ import pickle
 import os
 import math
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-def p(f): return os.path.join(BASE_DIR, f)
+# ── Path resolution: works locally AND on Streamlit Cloud ──
+# On Streamlit Cloud, __file__ may point inside a venv; we check
+# multiple candidate locations and pick the first that exists.
+def p(filename):
+    candidates = [
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), filename),
+        os.path.join(os.getcwd(), filename),
+        filename,
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    # fallback — return relative path and let the error surface clearly
+    return filename
 
 st.set_page_config(page_title="🫁 Lung Cancer Risk Predictor", page_icon="🫁", layout="wide")
 
